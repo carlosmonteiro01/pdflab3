@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+
+
+    <script src="js/jquery.js"></script>
+    <link href="css/bootstrap.min.css" rel=stylesheet>
+
+
+    <script>
+        $(document).ready(function(){
+            if (sessionStorage.getItem('login') != null){
+                alert("já logado");
+                    window.location.href = '/pdfs.html';
+            }
+
+
+            $("#logar").click(function() {
+
+                var login = $( "#login" ).val();
+                var senha = $( "#senha").val();
+
+
+                var url = "/login/"+senha+"/"+login+"";
+
+                $.getJSON(url, function(data) {
+                    if (data != false){
+                        sessionStorage.setItem("login", data.login);
+                        sessionStorage.setItem("nome", data.nome);
+                        window.location.href = '/pdfs.html';
+                    } else{
+                        $("#aviso").html("nao foi possivel logar");
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+<div id="painelBusca">
+
+    <h3><caption><center>Login</center></caption><br/></h3>
+
+    <center><div class="form-group col-md-12">
+        <form">
+            <div class="col-md-12">
+                <label>Login: </label>
+                <input type="text" id="login" />
+            </div>
+
+            <br>
+            <div class="col-md-12">
+
+                <label>Senha: </label>
+                <input type="password" id="senha" />
+            </div>
+            <button id="logar">Logar</button>
+             <div id="aviso"></div>
+        </form>
+    </div></center>
+
+
+</body>
+
+</html>
